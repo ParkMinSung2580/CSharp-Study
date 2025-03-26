@@ -1,222 +1,159 @@
 ﻿internal class Program
 {
-    struct Position
+    const int MAX_Count = 6;
+
+    abstract class Pokemon  // Pokemon 부모 추상 클래스
     {
-        public int x;
-        public int y;
+        protected string mName;
+        public Pokemon(string name) { this.mName = name; }
+        public string getName { get { return mName; } }
+        public abstract void Attack();
     }
 
+    class Skill
+    { 
+        
+    }
+
+    class Pikachu : Pokemon // 피카츄
+    {
+        public Pikachu(string name) : base(name) { }
+        public override void Attack()
+        {
+            Console.WriteLine("스킬 사용 : 백만볼트");
+        }
+    }
+    class Meowth : Pokemon // 뮤츠
+    {
+        public Meowth(string name) : base(name) { }
+        public override void Attack()
+        {
+            Console.WriteLine("스킬 사용 : 염력");
+        }
+    }
+    class Mew : Pokemon // 뮤
+    {
+        public Mew(string name) : base(name) { }
+        public override void Attack()
+        {
+            Console.WriteLine("스킬 사용 : 사이코키네시스");
+        }
+    }
+    class Chikorita : Pokemon // 치코리타
+    {
+        public Chikorita(string name) : base(name) { }
+        public override void Attack()
+        {
+            Console.WriteLine("스킬 사용 : 베어가르기");
+        }
+    }
+    class Wobbuffet : Pokemon   // 마자용
+    {
+        public Wobbuffet(string name) : base(name) { }
+        public override void Attack()
+        {
+            Console.WriteLine("스킬 사용 : 맞아ㅇㅇㅇㅇㅇ용");
+        }
+    }
+
+    class Psyduck : Pokemon   // 고라파덕
+    {
+        public Psyduck(string name) : base(name) { }
+        public override void Attack()
+        {
+            Console.WriteLine("스킬 사용 : 흉내내기");
+        }
+    }
+
+    class Trainer
+    {
+        public string mName;     // 트레이너 이름
+        public int index = 0;    // 인덱스
+        public Pokemon[] pokemon = new Pokemon[MAX_Count];  // 해당 트레이너가 가질 수 있는 포켓몬 인벤토리 최대 6
+
+        public Trainer(string name) { mName = name; }
+
+        public bool isHavePokemon()
+        {
+            return (index > 0); // 실제로 포켓몬이 하나라도 있으면 true
+        }
+        public bool isFullPokemon()
+        {
+            return (index >= MAX_Count); // 포켓몬이 가득 차면 true
+        }
+        public void Print()
+        {
+            if (isHavePokemon())
+            {
+                Console.WriteLine("{0}이 가진 포켓몬 목록", mName);
+                for (int i = 0; i < index; i++) // index까지만 반복
+                {
+                    Console.WriteLine("{0}", pokemon[i].getName);
+                }
+            }
+            else
+            {
+                Console.WriteLine("포켓몬이 하나도 없습니다.");
+            }
+        }
+
+        public void getPokemon(Pokemon catchPokemon)
+        {
+            if (!isFullPokemon())
+            {
+                pokemon[index] = catchPokemon;
+                index++; // 새로운 포켓몬을 추가할 때마다 index를 증가시킴
+                Console.WriteLine("{0} 획득!",catchPokemon.getName);
+            }
+            else
+            {
+                Console.WriteLine("포켓몬 인벤토리가 가득 찼습니다.");
+            }
+        }
+        public Pokemon pokemonPeek(int num)
+        {
+            if (isHavePokemon())
+            {
+                return pokemon[num];
+            }
+            else
+            {
+                Console.WriteLine("잘못된 인덱스 기입");
+                return null;
+            }
+        }
+    }
+
+    // Main 함수
     static void Main(string[] args)
     {
-        bool gameOver = false;
-        Position playerPos;
-        char[,] map;
-        Start(out playerPos, out map);
-        while (gameOver == false)
-        {
-            Render(playerPos, map);
-            ConsoleKey key = Input();
-            Update(key, ref playerPos, map, ref gameOver);
-        }
-        End();
-    }
+        Pokemon[] filed = new Pokemon[6]; 
+        Trainer kim = new Trainer("kim");
 
-    static void Start(out Position playerPos, out char[,] map)
-    {
-        // 게임 설정
-        Console.CursorVisible = false;
-        // 플레이어 위치 설정
-        playerPos.x = 4;
-        playerPos.y = 4;
-        // 맵 설정
-        map = new char[8, 8]
-        {
-            { ' ', ' ', '▒', '▒', '▒', ' ', ' ', ' ' },
-            { ' ', ' ', '▒', '□', '▒', ' ', ' ', ' ' },
-            { ' ', ' ', '▒', ' ', '▒', '▒', '▒', '▒' },
-            { '▒', '▒', '▒', '■', ' ', '■', '□', '▒' },
-            { '▒', '□', ' ', '■', ' ', '▒', '▒', '▒' },
-            { '▒', '▒', '▒', '▒', '■', '▒', ' ', ' ' },
-            { ' ', ' ', ' ', '▒', '□', '▒', ' ', ' ' },
-            { ' ', ' ', ' ', '▒', '▒', '▒', ' ', ' ' },
-        };
-    }
+        Pokemon pikachu = new Pikachu("피카츄");
+        Pokemon mew = new Mew("뮤");
+        Pokemon meowth = new Meowth("뮤츠");
+        Pokemon chikorita = new Chikorita("치코리타");
+        Pokemon wobbuffet = new Wobbuffet("마자용");
+        Pokemon psyduck = new Psyduck("고라파덕");
 
-    static void Render(Position playerPos, char[,] map)
-    {
-        Console.SetCursorPosition(0, 0);
-        PrintMap(map);
-        PrintPlayer(playerPos);
-    }
+        kim.getPokemon(pikachu);
+        kim.Print();
+        filed[0] = kim.pokemonPeek(0);
+        Console.WriteLine("내가 꺼낸 포켓몬 : {0}", filed[0].getName);
+        filed[0] = kim.pokemonPeek(1);
+        Console.WriteLine("--------------------------------------");
+        kim.getPokemon(meowth);
+        kim.getPokemon(chikorita);
+        kim.getPokemon(wobbuffet);
+        kim.getPokemon(psyduck);
+        kim.Print();
 
-    static void PrintMap(char[,] map)
-    {
-        for (int y = 0; y < map.GetLength(0); y++)
-        {
-            for (int x = 0; x < map.GetLength(1); x++)
-            {
-                Console.Write(map[y, x]);
-            }
-            Console.WriteLine();
-        }
-    }
-
-    static void PrintPlayer(Position playerPos)
-    {
-        Console.SetCursorPosition(playerPos.x, playerPos.y);
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.Write('▼');
-        Console.ResetColor();
-    }
-
-    static ConsoleKey Input()
-    {
-        return Console.ReadKey(true).Key;
-    }
-
-    static void Update(ConsoleKey key, ref Position playerPos, char[,] map, ref bool gameOver)
-    {
-        Move(key, ref playerPos, map);
-        bool isClear = IsClear(map);
-        if (isClear)
-        {
-            gameOver = true;
-        }
-    }
-
-    static void Move(ConsoleKey key, ref Position playerPos, char[,] map)
-    {
-        Position targetPos;
-        Position overPos;
-        switch (key)
-        {
-            case ConsoleKey.A:
-            case ConsoleKey.LeftArrow:
-                targetPos.x = playerPos.x - 1;
-                targetPos.y = playerPos.y;
-                overPos.x = playerPos.x - 2;
-                overPos.y = playerPos.y;
-                break;
-            case ConsoleKey.D:
-            case ConsoleKey.RightArrow:
-                targetPos.x = playerPos.x + 1;
-                targetPos.y = playerPos.y;
-                overPos.x = playerPos.x + 2;
-                overPos.y = playerPos.y;
-                break;
-            case ConsoleKey.W:
-            case ConsoleKey.UpArrow:
-                targetPos.x = playerPos.x;
-                targetPos.y = playerPos.y - 1;
-                overPos.x = playerPos.x;
-                overPos.y = playerPos.y - 2;
-                break;
-            case ConsoleKey.S:
-            case ConsoleKey.DownArrow:
-                targetPos.x = playerPos.x;
-                targetPos.y = playerPos.y + 1;
-                overPos.x = playerPos.x;
-                overPos.y = playerPos.y + 2;
-                break;
-            default:
-                return;
-        }
-        // 움직이는 방향에 박스가 있을 때
-        if (map[targetPos.y, targetPos.x] == '■')
-        {
-            // 그 다음 위치에 골이 있을 때
-            if (map[overPos.y, overPos.x] == '□')
-            {
-                // 1. 골 위치에 골박스로
-                map[overPos.y, overPos.x] = '▣';
-                // 2. 박스 위치를 빈칸으로
-                map[targetPos.y, targetPos.x] = ' ';
-                // 3. 플레이어를 움직이려는 위치로
-                playerPos.x = targetPos.x;
-                playerPos.y = targetPos.y;
-            }
-            // 그 다음 위치에 빈칸이 있을 때
-            else if (map[overPos.y, overPos.x] == ' ')
-            {
-                // 1. 빈칸 위치에 박스로
-                map[overPos.y, overPos.x] = '■';
-                // 2. 박스 위치를 빈칸으로
-                map[targetPos.y, targetPos.x] = ' ';
-                // 3. 플레이어를 움직이려는 위치로
-                playerPos.x = targetPos.x;
-                playerPos.y = targetPos.y;
-            }
-        }
-        // 움직이는 방향에 골이 있을 때
-        else if (map[targetPos.y, targetPos.x] == '□')
-        {
-            playerPos.x = targetPos.x;
-            playerPos.y = targetPos.y;
-        }
-        // 움직이는 방향에 골박스가 있을 때
-        else if (map[targetPos.y, targetPos.x] == '▣')
-        {
-            // 그 다음 위치에 골이 있을 때
-            if (map[overPos.y, overPos.x] == '□')
-            {
-                // 1. 골 위치에 골박스로
-                map[overPos.y, overPos.x] = '▣';
-                // 2. 박스 위치를 빈칸으로
-                map[targetPos.y, targetPos.x] = '□';
-                // 3. 플레이어를 움직이려는 위치로
-                playerPos.x = targetPos.x;
-                playerPos.y = targetPos.y;
-            }
-            // 그 다음 위치에 빈칸이 있을 때
-            else if (map[overPos.y, overPos.x] == ' ')
-            {
-                // 1. 빈칸 위치에 박스로
-                map[overPos.y, overPos.x] = '■';
-                // 2. 박스 위치를 빈칸으로
-                map[targetPos.y, targetPos.x] = '□';
-                // 3. 플레이어를 움직이려는 위치로
-                playerPos.x = targetPos.x;
-                playerPos.y = targetPos.y;
-            }
-        }
-        // 움직이는 방향에 빈칸일 때
-        else if (map[targetPos.y, targetPos.x] == ' ')
-        {
-            playerPos.x = targetPos.x;
-            playerPos.y = targetPos.y;
-        }
-        // 움직이는 방향에 벽일 때
-        else if (map[targetPos.y, targetPos.x] == '▒')
-        {
-            // 아무것도 안함
-        }
-    }
-
-    static bool IsClear(char[,] map)
-    {
-        int goalCount = 0;
-        // 클리어 조건 : 빈칸이 없을 때
-        foreach (char tile in map)
-        {
-            if (tile == '□')
-            {
-                goalCount++;
-                break;
-            }
-        }
-        if (goalCount == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    static void End()
-    {
-        Console.Clear();
-        Console.WriteLine("축하합니다!!!\n소코반 게임을 성공적으로 클리어했습니다!");
+        pikachu.Attack();
+        mew.Attack();
+        meowth.Attack();
+        chikorita.Attack();
+        wobbuffet.Attack();
+        psyduck.Attack();
     }
 }

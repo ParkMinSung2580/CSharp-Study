@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,7 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="250326.cs" />
     <Compile Remove="Program.cs" />
+    <Compile Remove="Yosepus.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="250326.cs" />
+    <None Include="Program.cs" />
+    <None Include="Yosepus.cs" />
   </ItemGroup>
 
 </Project>

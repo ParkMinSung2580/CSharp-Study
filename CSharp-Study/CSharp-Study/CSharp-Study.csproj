@@ -12,6 +12,8 @@
     <Compile Remove="250326.cs" />
     <Compile Remove="Adjacency_Matrix_Graph.cs" />
     <Compile Remove="Alrgorism.cs" />
+    <Compile Remove="design_pattern\builder.cs" />
+    <Compile Remove="design_pattern\chain_Method.cs" />
     <Compile Remove="design_pattern\Designpattern.cs" />
     <Compile Remove="Graph.cs" />
     <Compile Remove="Graph_Pratice250331.cs" />
@@ -24,6 +26,8 @@
     <None Include="250326.cs" />
     <None Include="Adjacency_Matrix_Graph.cs" />
     <None Include="Alrgorism.cs" />
+    <None Include="design_pattern\builder.cs" />
+    <None Include="design_pattern\chain_Method.cs" />
     <None Include="Graph.cs" />
     <None Include="Graph_Pratice250331.cs" />
     <None Include="Parentheses_Search.cs" />

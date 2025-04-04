@@ -11,7 +11,10 @@
   <ItemGroup>
     <Compile Remove="250326.cs" />
     <Compile Remove="Adjacency_Matrix_Graph.cs" />
+    <Compile Remove="Alrgorism.cs" />
+    <Compile Remove="design_pattern\Designpattern.cs" />
     <Compile Remove="Graph.cs" />
+    <Compile Remove="Graph_Pratice250331.cs" />
     <Compile Remove="Parentheses_Search.cs" />
     <Compile Remove="Program.cs" />
     <Compile Remove="Yosepus.cs" />
@@ -20,10 +23,16 @@
   <ItemGroup>
     <None Include="250326.cs" />
     <None Include="Adjacency_Matrix_Graph.cs" />
+    <None Include="Alrgorism.cs" />
     <None Include="Graph.cs" />
+    <None Include="Graph_Pratice250331.cs" />
     <None Include="Parentheses_Search.cs" />
     <None Include="Program.cs" />
     <None Include="Yosepus.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="design_pattern\Designpattern.cs" />
   </ItemGroup>
 
 </Project>
